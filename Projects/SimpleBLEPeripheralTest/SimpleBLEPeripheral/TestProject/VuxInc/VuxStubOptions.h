@@ -1,0 +1,5 @@
+#ifndef __VUXSTUBOPTIONS_H__
+#define __VUXSTUBOPTIONS_H__
+
+
+#endif //__VUXSTUBOPTIONS_H__
