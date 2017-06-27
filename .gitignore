@@ -57,7 +57,6 @@ Documents/documents/document 2017-2-24/技术文档17-2-24.html
 *.sim
 *.lib
 *.map
-*.hex
 *.d51
 *.pbi
 *.cout
@@ -67,11 +66,10 @@ Documents/documents/document 2017-2-24/技术文档17-2-24.html
 *.browse
 *.dbgdt
 *.dni
-*.dep
-*.ewd
-*.ewp
 *.vupr
 *.txt
 *.udti
 *.ico
 *.dat
+*.browse
+Projects/ble/SimpleBLEPeripheral/CC2541DB/CC2541-OAD-ImgA/Obj/SimpleBLEPeripheral.pbd.browse
