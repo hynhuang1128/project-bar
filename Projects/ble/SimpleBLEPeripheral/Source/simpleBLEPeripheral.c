@@ -63,6 +63,7 @@ uint16 pesk_Current_Height;
 uint16 device_PeskMove_Interval = PESKMOVE_INTERVAL_TRIPLESEG;
 uint8 user_HealthData_Count = 0;
 uint8 pesk_Lock_Status = PESK_UNLOCK;
+int16 pesk_Move_Speed;
 
 #if (defined PRODUCT_TYPE_BAR2) || (defined PRODUCT_TYPE_CUBE)
 uint8 device_Current_CtrlMode = DEVICE_CTRL_FREE;
@@ -157,7 +158,7 @@ static uint8 advertData[] =
 static uint8 attDeviceName[GAP_DEVICE_NAME_LEN] = "Officewell #0001d1";
 
 // SSID name
-static uint8 ssidName[SSID_LEN] = "Officewell #0001d1";
+static uint8 *ssidName;
 
 /*********************************************************************
  * SSID NAME CHANGE
@@ -223,6 +224,7 @@ void SimpleBLEPeripheral_Init( uint8 task_id )
   {
     osal_snv_write( BLE_NVID_DEVICE_SSID, BLE_NVID_DEVICE_SSID_LEN, ssidName );
   }*/
+  ssidName = attDeviceName; 
   ssid_change();
   
   // Authorize init
@@ -740,7 +742,6 @@ static void peripheralStateNotificationCB( gaprole_States_t newState )
  */
 static void performPeriodicTask( uint16 timeParam )
 {
-  static int16 pesk_Move_Speed;
   static uint8 userPosture;
   
   if( !( timeParam % COUNT_PERIODIC_(20) ) )

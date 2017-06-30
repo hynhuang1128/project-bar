@@ -722,7 +722,7 @@ void device_Set_PostureThreshold();
  *  
  * @return  none
  */
-void device_Count_Calibration( int16 pesk_Move_Speed );
+void device_Count_Calibration();
 
 /*********************************************************************
  * @fn      device_Get_Posture
