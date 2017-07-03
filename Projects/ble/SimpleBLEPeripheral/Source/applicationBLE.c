@@ -39,6 +39,7 @@ autoMoveTime_t autoMoveTimeData;
 #endif
 
 static bool inSaveMode;
+static bool stopFlag;
 
 /**************************************************************************************************
  * EXTERN VARIBLES
@@ -50,6 +51,7 @@ extern uint8 device_Current_CtrlMode;
 extern uint8 user_HealthData_Count;
 extern int16 pesk_Stop_Count;
 extern uint16 device_PeskMove_Interval;
+extern int16 pesk_Move_Speed;
 
 extern healthData_t user_HealthData[USER_HEALTHDATA_MAX_COUNT];
 extern hardwareInfo_t pesk_Hardware_Info;
@@ -186,7 +188,7 @@ static void device_Get_MoveRange( uint8 *buffer )
         break;
         
       case PESK_TRIPLESEG_METRIC:
-        pesk_Hardware_Info.height_Minimum = PESK_TRIPLESEG_METRIC_MIN;
+        pesk_Hardware_Info.height_Minimum = DEFAULT_SET_MIN;
         break;
         
       case PESK_DOUBLESEG_IMPERIAL:
@@ -1412,6 +1414,7 @@ void device_Set_PeskMoveStatus()
       {
         DEVICE_SENDCMD_PESK(CMD_PESK_STOP);
         pesk_Move_CurrentStatus = PESK_STATUS_IDLE;
+        stopFlag = true;
         cmd_Previous = DEVICE_COMMON_STOP;
         device_Current_CtrlMode = DEVICE_CTRL_HANDSET;
       }
@@ -1467,6 +1470,7 @@ void device_Get_HandsetStatus()
 {
   static uint8 handset_CurrentPressed;
   static uint8 handset_PreviousPressed;
+  
 #ifdef AUTOMOVE_FUNC
   static bool isHappened;
   static uint16 delayTime;
@@ -1508,7 +1512,14 @@ void device_Get_HandsetStatus()
               }
               else
               {
-                pesk_Move_CurrentStatus = PESK_STATUS_UP;
+                if(pesk_Move_Speed == 0)
+                {
+                  pesk_Move_CurrentStatus = PESK_STATUS_UP;
+                }
+                else
+                {
+                  pesk_Move_CurrentStatus = PESK_STATUS_IDLE;
+                }
               }
               break;
               
@@ -1519,7 +1530,14 @@ void device_Get_HandsetStatus()
               }
               else
               {
-                pesk_Move_CurrentStatus = PESK_STATUS_DOWN;
+                if(pesk_Move_Speed == 0)
+                {
+                  pesk_Move_CurrentStatus = PESK_STATUS_DOWN;
+                }
+                else
+                {
+                  pesk_Move_CurrentStatus = PESK_STATUS_IDLE;
+                }
               }
               break;
               
@@ -1639,6 +1657,42 @@ void device_Get_HandsetStatus()
             }
             #endif
           }
+          else if(handset_CurrentPressed == HANDSET_STATUS_UP)
+          {
+            if( (pesk_Move_Speed >= 0) )
+            {
+              if(!stopFlag)
+              {
+                pesk_Move_CurrentStatus = PESK_STATUS_UP;
+              }
+              else
+              {
+                pesk_Move_CurrentStatus = PESK_STATUS_IDLE;
+                if(pesk_Move_Speed == 0)
+                {
+                  stopFlag = false;
+                }
+              }
+            }
+          }
+          else if(handset_CurrentPressed == HANDSET_STATUS_DOWN)
+          {
+            if( (pesk_Move_Speed <= 0) )
+            {
+              if(!stopFlag)
+              {
+                pesk_Move_CurrentStatus = PESK_STATUS_DOWN;
+              }
+              else
+              {
+                pesk_Move_CurrentStatus = PESK_STATUS_IDLE;
+                if(pesk_Move_Speed == 0)
+                {
+                  stopFlag = false;
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -1716,13 +1770,16 @@ void uart_DataHandle( uint8 numBytes )
  *  
  * @return  none
  */
-void device_Count_Calibration( int16 pesk_Move_Speed )
+void device_Count_Calibration()
 {
   static int16 arg_DoubleSeg[5] = { 7, 3, 9, 3, 10};
   static int16 arg_TripleSeg[5] = { 14, 5, 13, 5, 14 };
   int16 *args;
   int16 heightDiffer;
   heightDiffer = (int16)(device_Height_Destinate - pesk_Current_Height);
+  
+  //DEBUG_MSG( (uint8)(pesk_Stop_Count >> 8), (uint8)(pesk_Stop_Count), (uint8)(pesk_Move_Speed), (uint8)(pesk_Current_Height) );
+  
   switch(device_Init_Info.peskType)
   {
     case PESK_DOUBLESEG_METRIC:

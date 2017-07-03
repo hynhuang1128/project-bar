@@ -210,6 +210,9 @@
 
 #define PESK_TRIPLESEG_IMPERIAL_MAX          522
 #define PESK_TRIPLESEG_IMPERIAL_MIN          233
+                                               
+#define DEFAULT_SET_MIN                      720
+#define DEFAULT_SET_MAX                      1283
 
 // Pesk critical value
 #define PESK_CRITICAL_VALUE                  1
@@ -722,7 +725,7 @@ void device_Set_PostureThreshold();
  *  
  * @return  none
  */
-void device_Count_Calibration( int16 pesk_Move_Speed );
+void device_Count_Calibration();
 
 /*********************************************************************
  * @fn      device_Get_Posture
