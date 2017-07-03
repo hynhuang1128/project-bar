@@ -45,31 +45,20 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
-*.s51
-*.cat
-*.inf
-*.r51
-Documents/documents/document 2017-2-24/技术文档17-2-24.html
-*.exe
-*.bat
-*.js
-*.bin
-*.sim
-*.lib
-*.map
-*.d51
-*.pbi
-*.cout
-*.pbd
-*.sfr
-*.wsdt
-*.browse
-*.dbgdt
-*.dni
-*.vupr
-*.txt
-*.udti
-*.ico
-*.dat
-*.browse
-Projects/ble/SimpleBLEPeripheral/CC2541DB/CC2541-OAD-ImgA/Obj/SimpleBLEPeripheral.pbd.browse
+
+# Complier temp files
+Projects/ble/SimpleBLEPeripheral/CC2541DB/CC2541/Exe/
+Projects/ble/SimpleBLEPeripheral/CC2541DB/CC2541/List/
+Projects/ble/SimpleBLEPeripheral/CC2541DB/CC2541/Obj/
+
+Projects/ble/SimpleBLEPeripheral/CC2541DB/CC2541DK-MINI Keyfob/Exe/
+Projects/ble/SimpleBLEPeripheral/CC2541DB/CC2541DK-MINI Keyfob/List/
+Projects/ble/SimpleBLEPeripheral/CC2541DB/CC2541DK-MINI Keyfob/Obj/
+
+Projects/ble/SimpleBLEPeripheral/CC2541DB/CC2541-OAD-ImgA/Exe/
+Projects/ble/SimpleBLEPeripheral/CC2541DB/CC2541-OAD-ImgA/List/
+Projects/ble/SimpleBLEPeripheral/CC2541DB/CC2541-OAD-ImgA/Obj/
+
+Projects/ble/SimpleBLEPeripheral/CC2541DB/CC2541-OAD-ImgB/Exe/
+Projects/ble/SimpleBLEPeripheral/CC2541DB/CC2541-OAD-ImgB/List/
+Projects/ble/SimpleBLEPeripheral/CC2541DB/CC2541-OAD-ImgB/Obj/
