@@ -188,7 +188,7 @@ static void device_Get_MoveRange( uint8 *buffer )
         break;
         
       case PESK_TRIPLESEG_METRIC:
-        pesk_Hardware_Info.height_Minimum = PESK_TRIPLESEG_METRIC_MIN;
+        pesk_Hardware_Info.height_Minimum = DEFAULT_SET_MIN;
         break;
         
       case PESK_DOUBLESEG_IMPERIAL:
@@ -1470,7 +1470,7 @@ void device_Get_HandsetStatus()
 {
   static uint8 handset_CurrentPressed;
   static uint8 handset_PreviousPressed;
-  static uint8 idleCount;
+  
 #ifdef AUTOMOVE_FUNC
   static bool isHappened;
   static uint16 delayTime;
